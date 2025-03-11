@@ -1,0 +1,1 @@
+docker run --name ANPAD -p 5432:5432 -e POSTGRES_USER=shashkapower -e POSTGRES_PASSWORD=NS12345 -e POSTGRES_DB=ANPAD2 -d postgres:17
