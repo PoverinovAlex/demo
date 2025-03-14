@@ -1,6 +1,6 @@
 package model;
 
-
+import java.util.List;
 import jakarta.persistence.*;
 
 
@@ -13,6 +13,8 @@ public class user {
     private String login;
     private String password;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<meal> meals;
     // Конструкторы
     public user() {}
 

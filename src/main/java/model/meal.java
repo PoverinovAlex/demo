@@ -2,6 +2,7 @@ package model;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "meals")
@@ -16,6 +17,13 @@ public class meal {
     private Date date;
     @Column
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private user User;
+
+    @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<productInfo> productInfos;
 
     // Конструкторы, геттеры и сеттеры
 

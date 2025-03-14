@@ -1,6 +1,7 @@
 package model;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -19,6 +20,9 @@ public class product {
     private float carbohydrates;
     @Column
     private float calories;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<productInfo> productInfos;
 
     // Конструкторы
     public product() {}

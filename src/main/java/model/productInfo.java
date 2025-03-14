@@ -2,6 +2,7 @@ package model;
 
 import jakarta.persistence.*;
 
+
 @Entity
 @Table(name = "product information")
 public class productInfo {
@@ -12,6 +13,14 @@ public class productInfo {
     private int mealId;
     @Column
     private int quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "meal_id", nullable = false)
+    private meal Meal;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false, insertable = false, updatable = false)
+    private product Product;
 
     // Конструкторы
     public productInfo() {}
