@@ -8,10 +8,54 @@ import java.util.Date;
 public class meal {
 
     @Id
+    @Column
     private int id;
+    @Column
     private int userId;
+    @Column
     private Date date;
+    @Column
     private String name;
 
     // Конструкторы, геттеры и сеттеры
+
+    meal(){
+
+    }
+
+    meal(int id, int userId, Date date, String name){
+        this.id = id;
+        this.userId = userId;
+        this.date = date;
+        this.name = name;
+    }
+
+    int GetId(){
+        return id;
+    }
+    int GetUserId(){
+        return userId;
+    }
+    Date GetDate(){
+        return date;
+    }
+    String GetName(){
+        return name;
+    }
+
+    void SetId(int Id){
+        id = Id;
+    }
+
+    void SetUserId (int uId){
+        userId = uId;
+    }
+
+    void SetDate (Date d){
+        date = d;
+    }
+
+    void SetName(String n){
+        name = n;
+    }
 }
