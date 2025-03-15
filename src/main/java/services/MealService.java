@@ -4,9 +4,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import model.Meal;
+import repositories.MealRepository;
 
 public class MealService {
     private EntityManagerFactory emf;
+    private MealRepository mealRepository;
     public void saveMeal(Meal Meal) {
         EntityManager entityManager = emf.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();

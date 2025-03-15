@@ -25,6 +25,8 @@ public class UserService {
     }
 
     public User registerUser(String login, String password, int Id) {
+
+        userRepository.findById(Id);
         User user = new User();
         user.setLogin(login);
         user.setPassword(passwordEncoder.encode(password)); // Хеширование пароля

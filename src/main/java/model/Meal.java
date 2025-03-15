@@ -9,6 +9,7 @@ import java.util.List;
 public class Meal {
 
     @Id
+    @GeneratedValue
     @Column
     private int id;
     @Column
