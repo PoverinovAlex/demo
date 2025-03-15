@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "products")
-public class product {
+public class Product {
 
     @Id
     @Column
@@ -22,12 +22,12 @@ public class product {
     private float calories;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<productInfo> productInfos;
+    private List<ProductInfo> productInfos;
 
     // Конструкторы
-    public product() {}
+    public Product() {}
 
-    public product(int id, String name, float proteins, float fats, float carbohydrates, float calories) {
+    public Product(int id, String name, float proteins, float fats, float carbohydrates, float calories) {
         this.id = id;
         this.name = name;
         this.proteins = proteins;

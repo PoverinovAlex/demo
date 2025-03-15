@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "meals")
-public class meal {
+public class Meal {
 
     @Id
     @Column
@@ -20,18 +20,18 @@ public class meal {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private user User;
+    private model.User user;
 
     @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<productInfo> productInfos;
+    private List<ProductInfo> productInfos;
 
     // Конструкторы, геттеры и сеттеры
 
-    meal(){
+    Meal(){
 
     }
 
-    meal(int id, int userId, Date date, String name){
+    Meal(int id, int userId, Date date, String name){
         this.id = id;
         this.userId = userId;
         this.date = date;

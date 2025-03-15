@@ -3,12 +3,11 @@ package services;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import model.productInfo;
-import model.user;
+import model.ProductInfo;
 
 public class ProductInfoService {
     private EntityManagerFactory emf;
-    public void saveProductInfo(productInfo ProductInfo) {
+    public void saveProductInfo(ProductInfo ProductInfo) {
         EntityManager entityManager = emf.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -16,7 +15,7 @@ public class ProductInfoService {
         transaction.commit();
         entityManager.close();
     }
-    public void deleteProductInfo(productInfo ProductInfo) {
+    public void deleteProductInfo(ProductInfo ProductInfo) {
         EntityManager entityManager = emf.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();

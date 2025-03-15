@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class user {
+public class User {
 
     @Id // обозначение первичного ключа
     private int id;
@@ -14,11 +14,11 @@ public class user {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<meal> meals;
+    private List<Meal> meals;
     // Конструкторы
-    public user() {}
+    public User() {}
 
-    public user(int id, String login, String password) {
+    public User(int id, String login, String password) {
         this.id = id;
         this.login = login;
         this.password = password;

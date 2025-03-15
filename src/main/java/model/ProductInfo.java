@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "product information")
-public class productInfo {
+public class ProductInfo {
     @Id
     @Column
     private int productId;
@@ -16,16 +16,16 @@ public class productInfo {
 
     @ManyToOne
     @JoinColumn(name = "meal_id", nullable = false)
-    private meal Meal;
+    private model.Meal Meal;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false, insertable = false, updatable = false)
-    private product Product;
+    private model.Product Product;
 
     // Конструкторы
-    public productInfo() {}
+    public ProductInfo() {}
 
-    public productInfo(int productId, int mealId, int quantity) {
+    public ProductInfo(int productId, int mealId, int quantity) {
         this.productId = productId;
         this.mealId = mealId;
         this.quantity = quantity;

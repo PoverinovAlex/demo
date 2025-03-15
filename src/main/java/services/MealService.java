@@ -3,11 +3,11 @@ package services;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import model.meal;
+import model.Meal;
 
 public class MealService {
     private EntityManagerFactory emf;
-    public void saveMeal(meal Meal) {
+    public void saveMeal(Meal Meal) {
         EntityManager entityManager = emf.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -15,7 +15,7 @@ public class MealService {
         transaction.commit();
         entityManager.close();
     }
-    public void deleteMeal(meal Meal) {
+    public void deleteMeal(Meal Meal) {
         EntityManager entityManager = emf.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
