@@ -1,6 +1,6 @@
-package repositories;
+package com.demo.repositories;
 
-import model.Meal;
+import com.demo.model.Meal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

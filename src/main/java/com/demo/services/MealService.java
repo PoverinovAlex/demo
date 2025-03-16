@@ -1,29 +1,28 @@
-package services;
+package com.demo.services;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import model.ProductInfo;
-import repositories.ProductInfoRepository;
+import com.demo.model.Meal;
+import com.demo.repositories.MealRepository;
 
-public class ProductInfoService {
+public class MealService {
     private EntityManagerFactory emf;
-    private ProductInfoRepository productInfoRepository;
-
-    public void saveProductInfo(ProductInfo ProductInfo) {
+    private MealRepository mealRepository;
+    public void saveMeal(Meal Meal) {
         EntityManager entityManager = emf.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        entityManager.persist(ProductInfo);
+        entityManager.persist(Meal);
         transaction.commit();
         entityManager.close();
     }
-    public void deleteProductInfo(ProductInfo ProductInfo) {
+    public void deleteMeal(Meal Meal) {
         EntityManager entityManager = emf.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         // Check if the entity is managed by the EntityManager, and if not, merge it before removal
-        entityManager.remove(entityManager.contains(ProductInfo) ? ProductInfo : entityManager.merge(ProductInfo));
+        entityManager.remove(entityManager.contains(Meal) ? Meal : entityManager.merge(Meal));
         transaction.commit();
         entityManager.close();
     }

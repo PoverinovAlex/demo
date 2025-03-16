@@ -1,4 +1,4 @@
-package services;
+package com.demo.services;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

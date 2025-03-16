@@ -1,10 +1,10 @@
-package services;
+package com.demo.services;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import model.Product;
-import repositories.ProductRepository;
+import com.demo.model.Product;
+import com.demo.repositories.ProductRepository;
 
 public class ProductService {
     private EntityManagerFactory emf;

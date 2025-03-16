@@ -1,8 +1,7 @@
-package repositories;
+package com.demo.repositories;
 
-import model.Product;
+import com.demo.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package model;
+package com.demo.model;
 
 import jakarta.persistence.*;
 import java.util.Date;
@@ -13,15 +13,13 @@ public class Meal {
     @Column
     private int id;
     @Column
-    private int userId;
-    @Column
     private Date date;
     @Column
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private model.User user;
+    private User user;
 
     @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductInfo> productInfos;
@@ -34,17 +32,11 @@ public class Meal {
 
     Meal(int id, int userId, Date date, String name){
         this.id = id;
-        this.userId = userId;
+        //this.userId = userId;
         this.date = date;
         this.name = name;
     }
 
-    int GetId(){
-        return id;
-    }
-    int GetUserId(){
-        return userId;
-    }
     Date GetDate(){
         return date;
     }
@@ -56,9 +48,6 @@ public class Meal {
         id = Id;
     }
 
-    void SetUserId (int uId){
-        userId = uId;
-    }
 
     void SetDate (Date d){
         date = d;
