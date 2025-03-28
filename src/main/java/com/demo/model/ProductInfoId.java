@@ -2,6 +2,7 @@ package com.demo.model;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class ProductInfoId implements Serializable {
@@ -15,4 +16,18 @@ public class ProductInfoId implements Serializable {
     private Product product;
 
     // Конструкторы, геттеры и сеттеры
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductInfoId that = (ProductInfoId) o;
+        return Objects.equals(meal, that.meal) &&
+                Objects.equals(product, that.product);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(meal, product);
+    }
 }
