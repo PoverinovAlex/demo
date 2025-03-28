@@ -1,6 +1,8 @@
 package com.demo.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +11,7 @@ import java.util.List;
 public class Meal {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
     @Column
@@ -21,8 +23,8 @@ public class Meal {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProductInfo> productInfos;
+    @OneToMany(mappedBy = "id.meal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProductInfo> productInfos = new ArrayList<>();
 
     // Конструкторы, геттеры и сеттеры
 

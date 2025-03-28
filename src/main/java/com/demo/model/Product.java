@@ -1,6 +1,8 @@
 package com.demo.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,7 +24,7 @@ public class Product {
     private float calories;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProductInfo> productInfos;
+    private List<ProductInfo> productInfos = new ArrayList<>();
 
     // Конструкторы
     public Product() {}
