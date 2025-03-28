@@ -4,11 +4,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import com.demo.model.ProductInfo;
-import com.demo.repositories.ProductInfoRepository;
+import com.demo.repositories.ProductRepository;
 
 public class ProductInfoService {
     private EntityManagerFactory emf;
-    private ProductInfoRepository productInfoRepository;
+    private ProductRepository productInfoRepository;
 
     public void saveProductInfo(ProductInfo ProductInfo) {
         EntityManager entityManager = emf.createEntityManager();
