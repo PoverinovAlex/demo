@@ -18,10 +18,13 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder; // Для хеширования паролей
 
-    private EntityManagerFactory emf;
+    @PersistenceContext
+    EntityManager entityManager;
+
+    //private EntityManagerFactory emf;
 
     public UserService() {
-        this.emf = Persistence.createEntityManagerFactory("myPersistenceUnit");
+        //this.emf = Persistence.createEntityManagerFactory("myPersistenceUnit");
     }
 
     public User registerUser(String login, String password, int Id) {
@@ -37,7 +40,6 @@ public class UserService {
 
     // метод для сохранения пользователя в базу данных
     public void saveUser(User user) {
-        EntityManager entityManager = emf.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(user);
@@ -46,7 +48,6 @@ public class UserService {
     }
 
     public void updateUser(User user) {
-        EntityManager entityManager = emf.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.merge(user);
@@ -55,7 +56,6 @@ public class UserService {
     }
 
     public void deleteUser(User user) {
-        EntityManager entityManager = emf.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         // Check if the entity is managed by the EntityManager, and if not, merge it before removal

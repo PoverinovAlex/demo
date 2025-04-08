@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
@@ -22,7 +23,7 @@ public class ProductController {
     // Получение продукта по ID
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable(name = "id") int id){
-        Product product = productRepository.findByIdProduct(id);
+        Product product = productRepository.findById(id);
         return product != null
                 ? new ResponseEntity<>(product, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -75,7 +76,10 @@ public class ProductController {
     // Обновление продукта
     @PutMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Integer id, @RequestBody Product productDetails) {
-        Product product = productRepository.findByIdProduct(id);
+        Optional<Product> productOptional = productRepository.findById(id);
+
+        Product defaultProduct = new Product(); // Создайте объект по умолчанию
+        Product product = productOptional.orElse(defaultProduct);
 
         if (product != null) {
             product.setName(productDetails.getName());
@@ -93,7 +97,10 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Integer id) {
-        Product product = productRepository.findByIdProduct(id);
+
+        Optional<Product> productOptional = productRepository.findById(id);
+        Product defaultProduct = new Product(); // Создайте объект по умолчанию
+        Product product = productOptional.orElse(defaultProduct);
 
         if (product != null) {
             productRepository.delete(product);
