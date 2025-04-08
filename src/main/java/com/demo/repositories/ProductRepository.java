@@ -9,6 +9,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     Product findById(int id);
     Product findByName(String name);
+    List <Product> findByNameLike(String str);
     List<Product> findByProteinsBetween(float startPro, float endPro);
     List<Product> findByFatsBetween(float startFat, float endFat);
     List<Product> findByCarbohydratesBetween(float startCar, float endCar);

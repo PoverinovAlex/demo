@@ -1,33 +1,41 @@
 package com.demo.services;
 
+import com.demo.model.Product;
+import com.demo.repositories.ProductInfoRepository;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
 import com.demo.model.ProductInfo;
-import com.demo.repositories.ProductRepository;
+import jakarta.persistence.PersistenceContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
 public class ProductInfoService {
-    private EntityManagerFactory emf;
-    private ProductRepository productInfoRepository;
+    @Autowired
+    private ProductInfoRepository productInfoRepository;
+    @PersistenceContext
+    EntityManager entityManager;
 
-    public void saveProductInfo(ProductInfo ProductInfo) {
-        EntityManager entityManager = emf.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.persist(ProductInfo);
-        transaction.commit();
+    @Transactional
+    public void saveProduct(ProductInfo productInfo) {
+        entityManager.persist(productInfo);
         entityManager.close();
     }
-    public void deleteProductInfo(ProductInfo ProductInfo) {
-        EntityManager entityManager = emf.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        // Check if the entity is managed by the EntityManager, and if not, merge it before removal
-        entityManager.remove(entityManager.contains(ProductInfo) ? ProductInfo : entityManager.merge(ProductInfo));
-        transaction.commit();
+    @Transactional
+    public void updateProduct(Product productInfo){
+        entityManager.merge(productInfo);
         entityManager.close();
+    }
+
+    @Transactional
+    public void deleteProduct(Product productInfo){
+        // Проверяем, управляется ли сущность EntityManager, и если нет, объединяем её перед удалением
+        entityManager.remove(entityManager.contains(productInfo) ? productInfo : entityManager.merge(productInfo));
+        entityManager.close();
+    }
+
+    public ProductInfoRepository GetProductInfoRepository (){
+        return productInfoRepository;
     }
 }

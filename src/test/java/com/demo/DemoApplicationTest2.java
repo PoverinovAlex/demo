@@ -55,6 +55,24 @@ public class DemoApplicationTest2 {
             productService.updateProduct(product);
         }
     }
+    @Test
+    void contextLoads4(){
+        Product chicken2 = new Product(31, "chicken drumstick", 21.53f, 8.68f, 0.14f, 160);
+        Product chicken3 = new Product(32, "chicken thigh", 19.74f, 10.62f, 0, 167.1f);
 
+        productService.saveProduct(chicken2);
+        productService.saveProduct(chicken3);
+
+
+        List<Product> products = productService.GetProductRepository().findByNameLike("chicken %");
+        for (Product product : products) {
+            String name = product.getName();
+            StringBuilder stringBuilder = new StringBuilder(name);
+            stringBuilder.setCharAt(0, 'С');
+            product.setName(stringBuilder.toString());
+            productService.updateProduct(product);
+        }
+
+    }
 
 }
