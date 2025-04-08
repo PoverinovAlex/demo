@@ -5,7 +5,10 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import com.demo.model.Meal;
 import com.demo.repositories.MealRepository;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class MealService {
     private EntityManagerFactory emf;
     private MealRepository mealRepository;

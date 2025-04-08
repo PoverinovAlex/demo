@@ -5,7 +5,10 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import com.demo.model.ProductInfo;
 import com.demo.repositories.ProductRepository;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class ProductInfoService {
     private EntityManagerFactory emf;
     private ProductRepository productInfoRepository;
