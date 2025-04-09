@@ -18,18 +18,18 @@ public class ProductInfoService {
     EntityManager entityManager;
 
     @Transactional
-    public void saveProduct(ProductInfo productInfo) {
+    public void saveProductInfo(ProductInfo productInfo) {
         entityManager.persist(productInfo);
         entityManager.close();
     }
     @Transactional
-    public void updateProduct(Product productInfo){
+    public void updateProductInfo(Product productInfo){
         entityManager.merge(productInfo);
         entityManager.close();
     }
 
     @Transactional
-    public void deleteProduct(Product productInfo){
+    public void deleteProductInfo(Product productInfo){
         // Проверяем, управляется ли сущность EntityManager, и если нет, объединяем её перед удалением
         entityManager.remove(entityManager.contains(productInfo) ? productInfo : entityManager.merge(productInfo));
         entityManager.close();

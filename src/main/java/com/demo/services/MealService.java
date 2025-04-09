@@ -1,32 +1,40 @@
 package com.demo.services;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
 import com.demo.model.Meal;
 import com.demo.repositories.MealRepository;
+import jakarta.persistence.PersistenceContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
 public class MealService {
-    private EntityManagerFactory emf;
+    @Autowired
     private MealRepository mealRepository;
-    public void saveMeal(Meal Meal) {
-        EntityManager entityManager = emf.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.persist(Meal);
-        transaction.commit();
+    @PersistenceContext
+    EntityManager entityManager;
+
+    @Transactional
+    public void saveMeal(Meal meal) {
+        entityManager.persist(meal);
         entityManager.close();
     }
-    public void deleteMeal(Meal Meal) {
-        EntityManager entityManager = emf.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        // Check if the entity is managed by the EntityManager, and if not, merge it before removal
-        entityManager.remove(entityManager.contains(Meal) ? Meal : entityManager.merge(Meal));
-        transaction.commit();
+    @Transactional
+    public void updateProduct(Meal meal){
+        entityManager.merge(meal);
         entityManager.close();
+    }
+
+    @Transactional
+    public void deleteProduct(Meal meal){
+        // Проверяем, управляется ли сущность EntityManager, и если нет, объединяем её перед удалением
+        entityManager.remove(entityManager.contains(meal) ? meal : entityManager.merge(meal));
+        entityManager.close();
+    }
+
+    public MealRepository GetProductInfoRepository (){
+        return mealRepository;
     }
 }
