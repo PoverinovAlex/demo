@@ -11,8 +11,9 @@ public class Product {
 
     @Id
     @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
+    @Column(unique = true)
     private String name;
     @Column
     private float proteins;
@@ -29,16 +30,26 @@ public class Product {
     // Конструкторы
     public Product() {}
 
-    public Product(int id, String name, float proteins, float fats, float carbohydrates, float calories) {
-        this.id = id;
+    public Product(String name, float proteins, float fats, float carbohydrates, float calories, List<ProductInfo> productInfos) {
         this.name = name;
         this.proteins = proteins;
         this.fats = fats;
         this.carbohydrates = carbohydrates;
         this.calories = calories;
+        this.productInfos = productInfos;
     }
 
     // Геттеры и сеттеры
+
+
+    public List<ProductInfo> getProductInfos() {
+        return productInfos;
+    }
+
+    public void setProductInfos(List<ProductInfo> productInfos) {
+        this.productInfos = productInfos;
+    }
+
     public int getId() {
         return id;
     }

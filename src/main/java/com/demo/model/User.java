@@ -10,8 +10,9 @@ public class User {
 
     @Id // обозначение первичного ключа
     @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
+    @Column(unique = true)
     private String login;
     @Column
     private String password;
@@ -24,16 +25,24 @@ public class User {
     // Конструкторы
     public User() {}
 
-    public User(int id, String login, String password, String role) {
-        this.id = id;
+    public User(String login, String password, String role, List<Meal> meals) {
         this.login = login;
         this.password = password;
         this.role = role;
+        this.meals = meals;
     }
 
     // Геттеры и сеттеры
     public int getId() {
         return id;
+    }
+
+    public List<Meal> getMeals() {
+        return meals;
+    }
+
+    public void setMeals(List<Meal> meals) {
+        this.meals = meals;
     }
 
     public void setId(int id) {

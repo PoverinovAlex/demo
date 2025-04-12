@@ -4,7 +4,7 @@ import com.demo.model.User;
 import com.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
@@ -17,8 +17,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository; // Репозиторий для работы с базой данных
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder; // Для хеширования паролей
+    //@Autowired
+    //private BCryptPasswordEncoder passwordEncoder; // Для хеширования паролей
 
     //private EntityManagerFactory emf;
 
@@ -32,7 +32,7 @@ public class UserService {
         User user = new User();
         user.setLogin(login);
         user.setRole(role);
-        user.setPassword(passwordEncoder.encode(password)); // Хеширование пароля
+        user.setPassword(password); // Хеширование пароля
         user.setId(Id);
 
         return userRepository.save(user); // Сохранение пользователя в базе данных
@@ -52,10 +52,13 @@ public class UserService {
                     oldUser.setLogin(user.getLogin());
                 }
                 if (user.getPassword() != null) {
-                    oldUser.setPassword(passwordEncoder.encode(user.getPassword()));
+                    oldUser.setPassword(user.getPassword());
                 }
                 if (user.getRole() != null){
                     oldUser.setRole(user.getRole());
+                }
+                if(user.getMeals()!= null){
+                    oldUser.setMeals(user.getMeals());
                 }
                 userRepository.save(oldUser);
         } catch (RuntimeException e) {

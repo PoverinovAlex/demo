@@ -1,5 +1,6 @@
 package com.demo.services;
 
+import com.demo.model.Meal;
 import com.demo.model.Product;
 import com.demo.repositories.ProductInfoRepository;
 import jakarta.persistence.EntityManager;
@@ -19,11 +20,19 @@ public class ProductInfoService {
     public ProductInfo saveProductInfo(ProductInfo productInfo) {
         return productInfoRepository.save(productInfo);
     }
-    /*@Transactional
+
+
+    @Transactional
     public void updateProductInfo(ProductInfo productInfo){
         try {
             ProductInfo oldProductInfo = productInfoRepository.findById(productInfo.getId());
             oldProductInfo.setQuantity(productInfo.getQuantity());
+            if(productInfo.getProduct()!=null){
+                oldProductInfo.setProduct(productInfo.getProduct());
+            }
+            if(productInfo.getMeal()!= null){
+                oldProductInfo.setMeal(productInfo.getMeal());
+            }
             productInfoRepository.save(oldProductInfo);
 
         } catch (RuntimeException e) {
@@ -31,7 +40,7 @@ public class ProductInfoService {
             System.err.println("Error updating user: " + e.getMessage());
             throw e; // Перевыброс исключения, если необходимо
         }
-    }*/
+    }
 
     @Transactional
     public void deleteProductInfo(ProductInfo productInfo){

@@ -21,12 +21,17 @@ public class ProductService {
     public Product saveProduct(Product product) {
         return productRepository.save(product);
     }
+
+
     @Transactional
     public void updateProduct(Product product){
         try {
             Product oldProduct = productRepository.findById(product.getId());
             if (product.getName() != null) {
                 oldProduct.setName(product.getName());
+            }
+            if(product.getProductInfos()!= null){
+                oldProduct.setProductInfos(product.getProductInfos());
             }
             oldProduct.setProteins(product.getProteins());
             oldProduct.setFats(product.getFats());

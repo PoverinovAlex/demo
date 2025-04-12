@@ -19,14 +19,24 @@ public class MealService {
     public Meal saveMeal(Meal meal) {
         return mealRepository.save(meal);
     }
+
+
     @Transactional
-    public void updateProduct(Meal meal){
+    public void updateMeal(Meal meal){
         try {
             Meal oldMeal = mealRepository.findById(meal.GetId());
             if (meal.GetName() != null) {
                 oldMeal.SetName(meal.GetName());
             }
+            if(meal.getProductInfos()!=null){
+                oldMeal.setProductInfos(meal.getProductInfos());
+            }
+            if(meal.getUser()!=null){
+                oldMeal.setUser(meal.getUser());
+            }
             oldMeal.SetDate(meal.GetDate());
+            mealRepository.save(oldMeal);
+
         } catch (RuntimeException e) {
             // Логирование ошибки или выполнение альтернативных действий
             System.err.println("Error updating user: " + e.getMessage());
@@ -35,7 +45,7 @@ public class MealService {
     }
 
     @Transactional
-    public void deleteProduct(Meal meal){
+    public void deleteMeal(Meal meal){
         mealRepository.delete(meal);
     }
 
