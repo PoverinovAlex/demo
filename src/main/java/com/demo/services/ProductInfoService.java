@@ -14,25 +14,28 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductInfoService {
     @Autowired
     private ProductInfoRepository productInfoRepository;
-    @PersistenceContext
-    EntityManager entityManager;
 
     @Transactional
-    public void saveProductInfo(ProductInfo productInfo) {
-        entityManager.persist(productInfo);
-        entityManager.close();
+    public ProductInfo saveProductInfo(ProductInfo productInfo) {
+        return productInfoRepository.save(productInfo);
     }
-    @Transactional
-    public void updateProductInfo(Product productInfo){
-        entityManager.merge(productInfo);
-        entityManager.close();
-    }
+    /*@Transactional
+    public void updateProductInfo(ProductInfo productInfo){
+        try {
+            ProductInfo oldProductInfo = productInfoRepository.findById(productInfo.getId());
+            oldProductInfo.setQuantity(productInfo.getQuantity());
+            productInfoRepository.save(oldProductInfo);
+
+        } catch (RuntimeException e) {
+            // Логирование ошибки или выполнение альтернативных действий
+            System.err.println("Error updating user: " + e.getMessage());
+            throw e; // Перевыброс исключения, если необходимо
+        }
+    }*/
 
     @Transactional
-    public void deleteProductInfo(Product productInfo){
-        // Проверяем, управляется ли сущность EntityManager, и если нет, объединяем её перед удалением
-        entityManager.remove(entityManager.contains(productInfo) ? productInfo : entityManager.merge(productInfo));
-        entityManager.close();
+    public void deleteProductInfo(ProductInfo productInfo){
+        productInfoRepository.delete(productInfo);
     }
 
     public ProductInfoRepository GetProductInfoRepository (){

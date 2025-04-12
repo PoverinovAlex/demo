@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 
 import jakarta.persistence.*;
@@ -19,20 +20,18 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder; // Для хеширования паролей
 
-    @PersistenceContext
-    EntityManager entityManager;
-
     //private EntityManagerFactory emf;
 
     public UserService() {
         //this.emf = Persistence.createEntityManagerFactory("myPersistenceUnit");
     }
 
-    public User registerUser(String login, String password, int Id) {
+    public User registerUser(String login, String role, String password, int Id) {
 
         userRepository.findById(Id);
         User user = new User();
         user.setLogin(login);
+        user.setRole(role);
         user.setPassword(passwordEncoder.encode(password)); // Хеширование пароля
         user.setId(Id);
 
@@ -40,22 +39,36 @@ public class UserService {
     }
 
     @Transactional
-    public void saveUser(User user) {
-        entityManager.persist(user);
-        entityManager.close();
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
+
 
     @Transactional
     public void updateUser(User user) {
-        entityManager.merge(user);
-        entityManager.close();
+        try {
+            User oldUser = userRepository.findById(user.getId());
+                if (user.getLogin() != null) {
+                    oldUser.setLogin(user.getLogin());
+                }
+                if (user.getPassword() != null) {
+                    oldUser.setPassword(passwordEncoder.encode(user.getPassword()));
+                }
+                if (user.getRole() != null){
+                    oldUser.setRole(user.getRole());
+                }
+                userRepository.save(oldUser);
+        } catch (RuntimeException e) {
+            // Логирование ошибки или выполнение альтернативных действий
+            System.err.println("Error updating user: " + e.getMessage());
+            throw e; // Перевыброс исключения, если необходимо
+        }
     }
+
 
     @Transactional
     public void deleteUser(User user) {
-        // Проверяем, управляется ли сущность EntityManager, и если нет, объединяем её перед удалением
-        entityManager.remove(entityManager.contains(user) ? user : entityManager.merge(user));
-        entityManager.close();
+        userRepository.delete(user);
     }
 
     public UserRepository GetUserRepository (){

@@ -28,34 +28,38 @@ public class Meal {
 
     // Конструкторы, геттеры и сеттеры
 
-    Meal(){
+    public Meal(){
 
     }
 
-    Meal(int id, int userId, Date date, String name){
+    public Meal(int id, int userId, Date date, String name){
         this.id = id;
         //this.userId = userId;
         this.date = date;
         this.name = name;
     }
 
-    Date GetDate(){
+    public int GetId(){
+        return id;
+    }
+
+    public Date GetDate(){
         return date;
     }
-    String GetName(){
+
+    public String GetName(){
         return name;
     }
 
-    void SetId(int Id){
+    public void SetId(int Id){
         id = Id;
     }
 
-
-    void SetDate (Date d){
+    public void SetDate (Date d){
         date = d;
     }
 
-    void SetName(String n){
+    public void SetName(String n){
         name = n;
     }
 }

@@ -18,43 +18,34 @@ public class ProductService {
     EntityManager entityManager;
 
     @Transactional
-    public void saveProduct(Product product) {
-        entityManager.persist(product);
-        entityManager.close();
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
     }
     @Transactional
     public void updateProduct(Product product){
-        entityManager.merge(product);
-        entityManager.close();
+        try {
+            Product oldProduct = productRepository.findById(product.getId());
+            if (product.getName() != null) {
+                oldProduct.setName(product.getName());
+            }
+            oldProduct.setProteins(product.getProteins());
+            oldProduct.setFats(product.getFats());
+            oldProduct.setCarbohydrates(product.getCarbohydrates());
+            oldProduct.setCalories(product.getCalories());
+            productRepository.save(oldProduct);
+        } catch (RuntimeException e) {
+            // Логирование ошибки или выполнение альтернативных действий
+            System.err.println("Error updating user: " + e.getMessage());
+            throw e; // Перевыброс исключения, если необходимо
+        }
     }
 
     @Transactional
     public void deleteProduct(Product product){
-        // Проверяем, управляется ли сущность EntityManager, и если нет, объединяем её перед удалением
-        entityManager.remove(entityManager.contains(product) ? product : entityManager.merge(product));
-        entityManager.close();
+        productRepository.delete(product);
     }
 
     public ProductRepository GetProductRepository (){
         return productRepository;
     }
 }
-
-
- /*   public void saveProduct(Product Product) {
-        EntityManager entityManager = emf.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.persist(Product);
-        transaction.commit();
-        entityManager.close();
-    }
-    public void deleteProduct(Product Product) {
-        EntityManager entityManager = emf.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        // Check if the entity is managed by the EntityManager, and if not, merge it before removal
-        entityManager.remove(entityManager.contains(Product) ? Product : entityManager.merge(Product));
-        transaction.commit();
-        entityManager.close();
-    }*/

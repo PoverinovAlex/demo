@@ -1,5 +1,6 @@
 package com.demo.services;
 
+import com.demo.model.Product;
 import jakarta.persistence.EntityManager;
 import com.demo.model.Meal;
 import com.demo.repositories.MealRepository;
@@ -13,28 +14,32 @@ import org.springframework.transaction.annotation.Transactional;
 public class MealService {
     @Autowired
     private MealRepository mealRepository;
-    @PersistenceContext
-    EntityManager entityManager;
 
     @Transactional
-    public void saveMeal(Meal meal) {
-        entityManager.persist(meal);
-        entityManager.close();
+    public Meal saveMeal(Meal meal) {
+        return mealRepository.save(meal);
     }
     @Transactional
     public void updateProduct(Meal meal){
-        entityManager.merge(meal);
-        entityManager.close();
+        try {
+            Meal oldMeal = mealRepository.findById(meal.GetId());
+            if (meal.GetName() != null) {
+                oldMeal.SetName(meal.GetName());
+            }
+            oldMeal.SetDate(meal.GetDate());
+        } catch (RuntimeException e) {
+            // Логирование ошибки или выполнение альтернативных действий
+            System.err.println("Error updating user: " + e.getMessage());
+            throw e; // Перевыброс исключения, если необходимо
+        }
     }
 
     @Transactional
     public void deleteProduct(Meal meal){
-        // Проверяем, управляется ли сущность EntityManager, и если нет, объединяем её перед удалением
-        entityManager.remove(entityManager.contains(meal) ? meal : entityManager.merge(meal));
-        entityManager.close();
+        mealRepository.delete(meal);
     }
 
-    public MealRepository GetProductInfoRepository (){
+    public MealRepository GetMealRepository (){
         return mealRepository;
     }
 }

@@ -24,15 +24,25 @@ class DemoApplicationTests {
 	UserRepository userRepository;
 
 	@Test
+	void deleteAllUsers(){
+		List<User> users = userService.GetUserRepository().findAll();
+		for (User user : users){
+			userService.deleteUser(user);
+		}
+	}
+
+
+	@Test
 	void contextLoads() {
-		User sanechka = userService.registerUser("testLogin2", "testPassword", 2);
+		User sanechka = userService.registerUser("testLogin2", "ROLE_USER", "testPassword", 2);
 		assertNotNull(sanechka);
 		assertEquals("testLogin2", sanechka.getLogin());
 	}
 
 	@Test
-	void contextLoads2() {
-		User nikitusya = userService.registerUser("testLogin3", "testPassword", 3);
+	void contextLoads2() { //уточнить
+		User test = new User(3, "testLogin3", "testPassword3", "ROLE_ADMIN");
+		User nikitusya = userService.saveUser(test);
 		assertNotNull(nikitusya);
 		assertEquals("testLogin3", nikitusya.getLogin());
 
@@ -57,6 +67,13 @@ class DemoApplicationTests {
 		user.setLogin("Sanechka");
 		userService.updateUser(user);
 
+	}
+
+	@Test
+	void testUpdateRole(){
+		User testUser = userService.GetUserRepository().findById(2);
+		testUser.setRole("ROLE_ADMIN");
+		userService.updateUser(testUser);
 	}
 
 }
