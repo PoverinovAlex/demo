@@ -25,6 +25,8 @@ public class User {
     // Конструкторы
     public User() {}
 
+
+
     public User(String login, String password, String role, List<Meal> meals) {
         this.login = login;
         this.password = password;

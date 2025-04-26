@@ -21,20 +21,7 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                                 auth.requestMatchers("/**").permitAll()
-/*                                        .requestMatchers("/api/auth/login").permitAll()
-                                  .requestMatchers("/index").authenticated()
-                                  .requestMatchers("/api/clients/**").hasAuthority("ROLE_ADMIN")
-                                  .requestMatchers("/api/categories/**").permitAll()
-                                  .requestMatchers("/api/manufacturers/**").permitAll()
-                                  .requestMatchers("/api/orders/**").permitAll()
-                                  .requestMatchers("/api/products/**").permitAll()
-                                  .requestMatchers("/api/shippings/**").permitAll()*/
-                )/*.addFilterBefore(jwtAuthenticationFilter(
-                                jwtTokenProvider,
-                                myClientService),
-                        UsernamePasswordAuthenticationFilter.class)
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)*/
+                )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll
                 ).build();
     }

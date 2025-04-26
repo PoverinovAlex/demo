@@ -1,6 +1,8 @@
 package com.demo.DTO;
 
 
+import com.demo.model.User;
+
 public class UserDTO {
     private int id;
     private String login;
@@ -10,6 +12,12 @@ public class UserDTO {
         this.id = id;
         this.login = login;
         this.role = role;
+    }
+
+    public UserDTO (User user){
+        id = user.getId();
+        login = user.getLogin();
+        role = user.getRole();
     }
 
     public int getId() {
