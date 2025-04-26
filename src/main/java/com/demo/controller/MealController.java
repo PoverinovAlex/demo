@@ -2,11 +2,15 @@
 package com.demo.controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.demo.DTO.MealDTO;
+import com.demo.DTO.UserDTO;
 import com.demo.model.Meal;
+import com.demo.model.User;
 import com.demo.services.MealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,28 +30,36 @@ public class MealController {
         return mealService.GetMealRepository().save(meal);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Meal> getMealById(@PathVariable(name = "id") int id){
+    public ResponseEntity<MealDTO> getMealById(@PathVariable(name = "id") int id){
         Meal meal = mealService.GetMealRepository().findById(id);
-        return meal != null
-                ? new ResponseEntity<>(meal, HttpStatus.OK)
+        MealDTO mealDTO = new MealDTO(meal);
+
+        return mealDTO != null
+                ? new ResponseEntity<MealDTO>(mealDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/{date}")
-    public ResponseEntity<Meal> getMealByName(@PathVariable LocalDateTime date) {
+    public ResponseEntity<MealDTO> getMealByName(@PathVariable LocalDateTime date) {
         Meal meal = (Meal) mealService.GetMealRepository().findByDate(date); // Предполагаем, что метод возвращает Product или null
-        if (meal != null) {
-            return ResponseEntity.ok().body(meal);
+        MealDTO mealDTO = new MealDTO(meal);
+        if (mealDTO != null) {
+            return ResponseEntity.ok().body(mealDTO);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/Date/{startDate}/{endDate}")
-    public ResponseEntity<List<Meal>> getProductsByCalories(@PathVariable LocalDateTime startDate, @PathVariable LocalDateTime endDate) {
+    public ResponseEntity<List<MealDTO>> getProductsByCalories(@PathVariable LocalDateTime startDate, @PathVariable LocalDateTime endDate) {
         List<Meal> meals = mealService.GetMealRepository().findByDateBetween(startDate, endDate);
-        if (!meals.isEmpty()) {
-            return ResponseEntity.ok().body(meals);
+        List<MealDTO> mealDTOList = new ArrayList<>();
+        for (Meal meal : meals){
+            MealDTO mealDTO = new MealDTO(meal);
+            mealDTOList.add(mealDTO);
+        }
+        if (!mealDTOList.isEmpty()) {
+            return ResponseEntity.ok().body(mealDTOList);
         } else {
             return ResponseEntity.notFound().build();
         }

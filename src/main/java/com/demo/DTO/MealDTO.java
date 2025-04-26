@@ -1,5 +1,7 @@
 package com.demo.DTO;
 
+import com.demo.model.Meal;
+
 import java.time.LocalDateTime;
 
 public class MealDTO {
@@ -7,6 +9,12 @@ public class MealDTO {
     private int id;
     private LocalDateTime date;
     private String name;
+
+    public MealDTO (Meal meal){
+        id = meal.GetId();
+        name = meal.GetName();
+        date = meal.GetDate();
+    }
 
     public MealDTO(String name, LocalDateTime date, int id) {
         this.name = name;
