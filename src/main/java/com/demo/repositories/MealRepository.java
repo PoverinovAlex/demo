@@ -4,6 +4,7 @@ import com.demo.model.Meal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -11,8 +12,8 @@ import java.util.List;
 public interface MealRepository extends JpaRepository<Meal, Integer> {
 
     List<Meal> findByUserId(int userId);
-    List<Meal> findByDateBetween(Date startDate, Date endDate);
-    List<Meal> findByDate(Date date);
+    List<Meal> findByDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+    List<Meal> findByDate(LocalDateTime date);
 
     // name LIKE 'value%'
     List<Meal> findByNameStartingWith(String prefix);

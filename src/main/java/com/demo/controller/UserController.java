@@ -30,7 +30,7 @@ public class UserController {
     }
 
     // Получение всех пользователей
-    @GetMapping
+    @GetMapping("/getAll")
     public List<User> getAllUsers() {
         return userService.GetUserRepository().findAll();
     }

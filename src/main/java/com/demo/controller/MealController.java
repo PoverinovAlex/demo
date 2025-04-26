@@ -1,6 +1,7 @@
-/*
+
 package com.demo.controller;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/meals")
 public class MealController {
 
     @Autowired
@@ -33,7 +34,7 @@ public class MealController {
     }
 
     @GetMapping("/{date}")
-    public ResponseEntity<Meal> getMealByName(@PathVariable Date date) {
+    public ResponseEntity<Meal> getMealByName(@PathVariable LocalDateTime date) {
         Meal meal = (Meal) mealService.GetMealRepository().findByDate(date); // Предполагаем, что метод возвращает Product или null
         if (meal != null) {
             return ResponseEntity.ok().body(meal);
@@ -43,7 +44,7 @@ public class MealController {
     }
 
     @GetMapping("/Date/{startDate}/{endDate}")
-    public ResponseEntity<List<Meal>> getProductsByCalories(@PathVariable Date startDate, @PathVariable Date endDate) {
+    public ResponseEntity<List<Meal>> getProductsByCalories(@PathVariable LocalDateTime startDate, @PathVariable LocalDateTime endDate) {
         List<Meal> meals = mealService.GetMealRepository().findByDateBetween(startDate, endDate);
         if (!meals.isEmpty()) {
             return ResponseEntity.ok().body(meals);
@@ -69,4 +70,4 @@ public class MealController {
     }
 
 
-}*/
+}

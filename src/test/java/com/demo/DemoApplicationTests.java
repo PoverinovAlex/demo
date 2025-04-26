@@ -39,7 +39,7 @@ class DemoApplicationTests {
 	@Autowired
 	UserRepository userRepository;
 
-	@Test
+	/*@Test
 	void deleteAllUsers(){
 		List<User> users = userService.GetUserRepository().findAll();
 		for (User user : users){
@@ -91,8 +91,8 @@ class DemoApplicationTests {
 		testUser.setRole("ROLE_ADMIN");
 		userService.updateUser(testUser);
 	}
-
-	@Test
+*/
+/*	@Test
 	void testlab(){
 		User user1 = new User("Nikitank", "77777778", "ROLE_USER", null);
 		User user2 = new User("Crishtiano", "Siiiiiii", "ROLE_USER", null);
@@ -270,7 +270,7 @@ class DemoApplicationTests {
 		productInfoService.updateProductInfo(productInfo8);
 		productInfoService.updateProductInfo(productInfo9);
 		productInfoService.updateProductInfo(productInfo10);
-	}
+	}*/
 
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.demo.controllerWeb.SecurityConfig;
 import java.util.Optional;
 
 
@@ -17,8 +18,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository; // Репозиторий для работы с базой данных
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder; // Для хеширования паролей
+/*    @Autowired
+    private BCryptPasswordEncoder passwordEncoder; // Для хеширования паролей*/
 
     //private EntityManagerFactory emf;
 
@@ -31,9 +32,9 @@ public class UserService {
         userRepository.findById(Id);
         User user = new User();
         user.setLogin(login);
-        user.setRole(role);
+        user.setRole(role);/*
         String hashedPassword = passwordEncoder.encode(password);
-        user.setPassword(hashedPassword); // Хеширование пароля
+        user.setPassword(hashedPassword); // Хеширование пароля*/
         user.setId(Id);
 
         return userRepository.save(user); // Сохранение пользователя в базе данных
@@ -41,8 +42,8 @@ public class UserService {
 
     @Transactional
     public User saveUser(User user) {
-        String hashedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(hashedPassword);
+        /*String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);*/
         return userRepository.save(user);
     }
 
@@ -54,10 +55,10 @@ public class UserService {
                 if (user.getLogin() != null) {
                     oldUser.setLogin(user.getLogin());
                 }
-                if (user.getPassword() != null) {
+/*                if (user.getPassword() != null) {
                     String hashedPassword = passwordEncoder.encode(user.getPassword());
                     oldUser.setPassword(hashedPassword);
-                }
+                }*/
                 if (user.getRole() != null){
                     oldUser.setRole(user.getRole());
                 }

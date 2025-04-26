@@ -1,4 +1,3 @@
-/*
 package com.demo.controller;
 
 import com.demo.model.Product;
@@ -111,4 +110,4 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
-}*/
+}

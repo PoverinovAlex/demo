@@ -1,35 +1,34 @@
-/*
 package com.demo.controller;
 import java.util.Optional;
 
+import com.demo.model.Product;
 import com.demo.model.ProductInfo;
 import com.demo.repositories.ProductInfoRepository;
+import com.demo.services.ProductInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/productInfos")
 public class ProductInfoController {
     @Autowired
-    private ProductInfoRepository productInfoRepository;
+    private ProductInfoService productInfoService;
 
     // Создание продукта
     @PostMapping
     public ProductInfo createProductInfo(@RequestBody ProductInfo productInfo) {
-        return productInfoRepository.save(productInfo);
+        return productInfoService.GetProductInfoRepository().save(productInfo);
     }
 @GetMapping("/{id}")
     public ResponseEntity<ProductInfo> getProductInfoById(@PathVariable(name = "id") int id) {
-        ProductInfo productInfo = productInfoRepository.findById(id);
+        ProductInfo productInfo = productInfoService.GetProductInfoRepository().findById(id);
 
-        if (productInfo.isPresent()) {
-            return new ResponseEntity<>(productInfo, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return productInfo != null
+            ? new ResponseEntity<>(productInfo, HttpStatus.OK)
+            : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
 }
-*/
