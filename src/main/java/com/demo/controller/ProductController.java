@@ -1,12 +1,17 @@
 package com.demo.controller;
 
+import com.demo.DTO.ProductDTO;
+import com.demo.DTO.UserDTO;
 import com.demo.model.Product;
+import com.demo.model.User;
 import com.demo.repositories.ProductRepository;
 import com.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,55 +28,84 @@ public class ProductController {
     }
     // Получение продукта по ID
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable(name = "id") int id){
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable(name = "id") int id){
         Product product = productService.GetProductRepository().findById(id);
-        return product != null
-                ? new ResponseEntity<>(product, HttpStatus.OK)
+        ProductDTO productDTO = new ProductDTO(product);
+
+        return productDTO != null
+                ? new ResponseEntity<>(productDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     @GetMapping("/proteins/{startPro}/{endPro}")
-    public ResponseEntity<List<Product>> getProductsByProteins(@PathVariable float startPro, @PathVariable float endPro) {
+    public ResponseEntity<List<ProductDTO>> getProductsByProteins(@PathVariable float startPro, @PathVariable float endPro) {
         List<Product> products = productService.GetProductRepository().findByProteinsBetween(startPro, endPro);
-        if (!products.isEmpty()) {
-            return ResponseEntity.ok().body(products);
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for (Product product : products){
+            ProductDTO productDTO = new ProductDTO(product);
+            productDTOList.add(productDTO);
+        }
+        if (!productDTOList.isEmpty()) {
+            return ResponseEntity.ok().body(productDTOList);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/fats/{startFat}/{endFat}")
-    public ResponseEntity<List<Product>> getProductsByFats(@PathVariable float startFat, @PathVariable float endFat) {
+    public ResponseEntity<List<ProductDTO>> getProductsByFats(@PathVariable float startFat, @PathVariable float endFat) {
         List<Product> products = productService.GetProductRepository().findByFatsBetween(startFat, endFat);
-        if (!products.isEmpty()) {
-            return ResponseEntity.ok().body(products);
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for (Product product : products){
+            ProductDTO productDTO = new ProductDTO(product);
+            productDTOList.add(productDTO);
+        }
+        if (!productDTOList.isEmpty()) {
+            return ResponseEntity.ok().body(productDTOList);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/carbohydrates/{startCar}/{endCar}")
-    public ResponseEntity<List<Product>> getProductsByCarbohydrates(@PathVariable float startCar, @PathVariable float endCar) {
+    public ResponseEntity<List<ProductDTO>> getProductsByCarbohydrates(@PathVariable float startCar, @PathVariable float endCar) {
         List<Product> products = productService.GetProductRepository().findByCarbohydratesBetween(startCar, endCar);
-        if (!products.isEmpty()) {
-            return ResponseEntity.ok().body(products);
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for (Product product : products){
+            ProductDTO productDTO = new ProductDTO(product);
+            productDTOList.add(productDTO);
+        }
+        if (!productDTOList.isEmpty()) {
+            return ResponseEntity.ok().body(productDTOList);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/calories/{startCal}/{endCal}")
-    public ResponseEntity<List<Product>> getProductsByCalories(@PathVariable float startCal, @PathVariable float endCal) {
+    public ResponseEntity<List<ProductDTO>> getProductsByCalories(@PathVariable float startCal, @PathVariable float endCal) {
         List<Product> products = productService.GetProductRepository().findByCaloriesBetween(startCal, endCal);
-        if (!products.isEmpty()) {
-            return ResponseEntity.ok().body(products);
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for (Product product : products){
+            ProductDTO productDTO = new ProductDTO(product);
+            productDTOList.add(productDTO);
+        }
+        if (!productDTOList.isEmpty()) {
+            return ResponseEntity.ok().body(productDTOList);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
     // Получение всех продуктов
     @GetMapping
-    public List<Product> getAllProduct() {
-        return productService.GetProductRepository().findAll();
+    public List<ProductDTO> getAllProduct() {
+        List<Product> products = productService.GetProductRepository().findAll();
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for (Product product : products){
+            ProductDTO productDTO = new ProductDTO(product);
+            productDTOList.add(productDTO);
+        }
+        return productDTOList;
     }
 
     // Обновление продукта

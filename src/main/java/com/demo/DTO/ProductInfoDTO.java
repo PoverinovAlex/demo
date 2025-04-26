@@ -1,5 +1,7 @@
 package com.demo.DTO;
 
+import com.demo.model.ProductInfo;
+
 public class ProductInfoDTO {
 
     private int id;
@@ -8,6 +10,10 @@ public class ProductInfoDTO {
     public ProductInfoDTO(int id, int quantity) {
         this.id = id;
         this.quantity = quantity;
+    }
+    public ProductInfoDTO(ProductInfo productInfo){
+        id = productInfo.getId();
+        quantity = productInfo.getQuantity();
     }
 
     public int getId() {

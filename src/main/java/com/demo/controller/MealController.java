@@ -65,6 +65,18 @@ public class MealController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Meal> updateMeal(@PathVariable Integer id, @RequestBody Meal mealDetails) {
+        return mealService.GetMealRepository().findById(id)
+                .map(meal -> {
+                    meal.SetDate(mealDetails.GetDate());
+                    meal.SetName(mealDetails.GetName());
+                    Meal updatedMeal = mealService.GetMealRepository().save(meal);
+                    return ResponseEntity.ok().body(updatedMeal);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     //удаление приема
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMeal(@PathVariable Integer id) {

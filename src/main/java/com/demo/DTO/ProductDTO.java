@@ -1,6 +1,7 @@
 package com.demo.DTO;
 
 
+import com.demo.model.Product;
 
 public class ProductDTO {
     private int id;
@@ -17,6 +18,15 @@ public class ProductDTO {
         this.fats = fats;
         this.carbohydrates = carbohydrates;
         this.calories = calories;
+    }
+
+    public  ProductDTO (Product product){
+        id = product.getId();
+        name = product.getName();
+        proteins = product.getProteins();
+        fats = product.getFats();
+        carbohydrates = product.getCarbohydrates();
+        calories = product.getCalories();
     }
 
     public int getId() {

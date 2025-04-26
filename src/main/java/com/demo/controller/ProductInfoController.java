@@ -1,6 +1,8 @@
 package com.demo.controller;
 import java.util.Optional;
 
+import com.demo.DTO.ProductInfoDTO;
+import com.demo.model.Meal;
 import com.demo.model.Product;
 import com.demo.model.ProductInfo;
 import com.demo.repositories.ProductInfoRepository;
@@ -21,14 +23,32 @@ public class ProductInfoController {
     public ProductInfo createProductInfo(@RequestBody ProductInfo productInfo) {
         return productInfoService.GetProductInfoRepository().save(productInfo);
     }
-@GetMapping("/{id}")
-    public ResponseEntity<ProductInfo> getProductInfoById(@PathVariable(name = "id") int id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductInfoDTO> getProductInfoById(@PathVariable(name = "id") int id) {
         ProductInfo productInfo = productInfoService.GetProductInfoRepository().findById(id);
+        ProductInfoDTO productInfoDTO = new ProductInfoDTO(productInfo);
 
-        return productInfo != null
-            ? new ResponseEntity<>(productInfo, HttpStatus.OK)
+        return productInfoDTO != null
+            ? new ResponseEntity<>(productInfoDTO, HttpStatus.OK)
             : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
     }
-
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductInfo> updateProductInfo(@PathVariable Integer id, @RequestBody ProductInfo productInfoDetails) {
+        return productInfoService.GetProductInfoRepository().findById(id)
+                .map(productInfo -> {
+                    productInfoDetails.setQuantity(productInfoDetails.getQuantity());
+                    ProductInfo updatedProductInfo = productInfoService.GetProductInfoRepository().save(productInfo);
+                    return ResponseEntity.ok().body(updatedProductInfo);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+        return productInfoService.GetProductInfoRepository().findById(id)
+                .map(productInfo -> {
+                    productInfoService.deleteProductInfo(productInfo);
+                    return ResponseEntity.ok().<Void>build();
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
