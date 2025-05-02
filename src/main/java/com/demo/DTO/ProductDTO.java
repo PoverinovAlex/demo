@@ -11,6 +11,9 @@ public class ProductDTO {
     private float carbohydrates;
     private float calories;
 
+    public ProductDTO() {
+    }
+
     public ProductDTO(int id, String name, float proteins, float fats, float carbohydrates, float calories) {
         this.id = id;
         this.name = name;

@@ -57,6 +57,7 @@ public class UserController {
         return userDTOList;
     }
 
+
     // Обновление пользователя
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User userDetails) {

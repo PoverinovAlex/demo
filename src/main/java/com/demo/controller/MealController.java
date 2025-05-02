@@ -26,8 +26,10 @@ public class MealController {
 
     // Создание приема
     @PostMapping
-    public Meal createMeal(@RequestBody Meal meal) {
-        return mealService.GetMealRepository().save(meal);
+    public Meal createMeal(@RequestBody MealDTO mealDTO) {
+        System.out.println(mealDTO);
+        //return mealService.GetMealRepository().save(meal);
+        return null;
     }
     @GetMapping("/{id}")
     public ResponseEntity<MealDTO> getMealById(@PathVariable(name = "id") int id){
@@ -37,6 +39,21 @@ public class MealController {
         return mealDTO != null
                 ? new ResponseEntity<MealDTO>(mealDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/get_by_user/{userID}")
+    public ResponseEntity<List<MealDTO>> getMealByUserID(@PathVariable int userID){
+        List <Meal> meals = mealService.GetMealRepository().findByUserId(userID);
+        List<MealDTO> mealDTOList = new ArrayList<>();
+        for (Meal meal : meals){
+            MealDTO mealDTO = new MealDTO(meal);
+            mealDTOList.add(mealDTO);
+        }
+        if (!mealDTOList.isEmpty()) {
+            return ResponseEntity.ok().body(mealDTOList);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/{date}")

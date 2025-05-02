@@ -7,6 +7,9 @@ public class ProductInfoDTO {
     private int id;
     private int quantity;
 
+    public ProductInfoDTO() {
+    }
+
     public ProductInfoDTO(int id, int quantity) {
         this.id = id;
         this.quantity = quantity;
