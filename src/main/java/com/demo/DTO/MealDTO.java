@@ -1,6 +1,7 @@
 package com.demo.DTO;
 
 import com.demo.model.Meal;
+import com.demo.model.Product;
 import com.demo.model.ProductInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -17,8 +18,8 @@ public class MealDTO {
     private String name;
     @JsonProperty("userID")
     private int userID;
-    @JsonProperty("productsID")
-    private List<Integer> productsID;
+    @JsonProperty("productInfosID")
+    private List<Integer> productInfosID;
 
     public MealDTO (Meal meal){
         id = meal.GetId();
@@ -26,17 +27,22 @@ public class MealDTO {
         date = meal.GetDate();
         userID = meal.getUser().getId();
 
+        List<ProductInfo> productInfos = meal.getProductInfos();
+        for (ProductInfo productInfo : productInfos){
+            productInfosID.add(productInfo.getId());
+        }
+
         //List<ProductInfo>
     }
 
     public MealDTO() {
     }
 
-    public MealDTO(String name, LocalDateTime date, int userID, List<Integer> productsID) {
+    public MealDTO(String name, LocalDateTime date, int userID, List<Integer> productInfosID) {
         this.name = name;
         this.date = date;
         this.userID = userID;
-        this.productsID = productsID;
+        this.productInfosID = productInfosID;
     }
 
     public int getId() {
@@ -68,7 +74,7 @@ public class MealDTO {
     }
 
     public List<Integer> getProductsID() {
-        return productsID;
+        return productInfosID;
     }
 
     public void setUserID(int userID) {
@@ -76,6 +82,6 @@ public class MealDTO {
     }
 
     public void setProductsID(List<Integer> productsID) {
-        this.productsID = productsID;
+        this.productInfosID = productsID;
     }
 }
