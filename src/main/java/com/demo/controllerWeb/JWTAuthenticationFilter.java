@@ -1,5 +1,6 @@
 package com.demo.controllerWeb;
 
+import com.demo.services.SecurityService.MyUserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +17,14 @@ import java.io.IOException;
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JWTUtil jwtUtil;
+    @Autowired
+    private MyUserService myUserService;
+
+    public JWTAuthenticationFilter(JWTUtil jwtUtil, MyUserService myUserService) {
+        this.jwtUtil = jwtUtil;
+        this.myUserService = myUserService;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse
             response, FilterChain filterChain) throws ServletException, IOException {
