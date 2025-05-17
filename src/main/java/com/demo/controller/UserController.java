@@ -1,17 +1,22 @@
 package com.demo.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import com.demo.DTO.AuthDTO;
 import com.demo.DTO.UserDTO;
+import com.demo.controllerWeb.JWTUtil;
 import com.demo.model.User;
 import com.demo.services.UserService;
 import jakarta.persistence.GeneratedValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,12 +25,20 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private JWTUtil jwtUtil;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestParam String login, @RequestParam String password) {
         if (login != null && password != null) {
             userService.registerUser(login, "ROLE_USER", password);
-            return ResponseEntity.ok("User registered successfully");
+                Authentication authentication = new UsernamePasswordAuthenticationToken(
+                        login,
+                        password,
+                        AuthorityUtils.createAuthorityList("ROLE_USER")
+                );
+                String token = jwtUtil.createToken(authentication);
+            return ResponseEntity.ok("User registered successfully. Token: " + token);
         } else {
             return ResponseEntity.badRequest().body("Login and password are required");
         }
@@ -35,15 +48,25 @@ public class UserController {
     public ResponseEntity<?> login(@RequestParam String login, @RequestParam String password) {
         User user = userService.GetUserRepository().findByLogin(login);
         if (user != null) {
-            if(user.getPassword().equals(password))
-                return ResponseEntity.ok("User logged in successfully");
-            else{
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
+            if(user.getPassword().equals(password)) {
+                if (user.getPassword().equals(password)) {
+                    Authentication authentication = new UsernamePasswordAuthenticationToken(
+                            login,
+                            password,
+                            AuthorityUtils.createAuthorityList("ROLE_USER")
+                    );
+                    String token = jwtUtil.createToken(authentication);
+                    return ResponseEntity.ok("User logged in successfully. Token: " + token);
+                }
+                else{
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
+                }
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid login");
             }
         }
-        else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid login");
-        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password or login");
     }
 
     // Создание пользователя
@@ -108,9 +131,3 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 }
-
-
-
-/*        return
-                userDTO.map(userDTO -> ResponseEntity.ok().body(userDTO))
-                .orElse(ResponseEntity.notFound().build());*/

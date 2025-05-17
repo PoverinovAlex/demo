@@ -17,33 +17,19 @@ import java.util.Date;
 
 @Component
 public class JWTUtil {
-    private String secretKey = "your_secret_key"; // Замените на свой секретный ключ
+    private String secretKey = "yourShorterSecretKeyForMeLoveMeLikeYouDoBeHappyDontWorry"; // Замените на свой секретный ключ
     private long validityInMilliseconds = 3600000; // 1 час
 
     @Autowired
     private MyUserService myUserService;
 
-    public String createToken(Authentication authentication) { // создание токена
-
-        MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
-        Date now = new Date();
-        Date validity = new Date(now.getTime() + validityInMilliseconds);
-
-/*        return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(now)
-                .setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();*/
-
-
+    public String createToken(Authentication authentication) {
+        // Логика создания токена
         return Jwts.builder()
-                .setSubject(Long.toString(myUserDetails.getUser().getId()))
-                .claim("username", myUserDetails.getUsername())
-                .claim("role", myUserDetails.getAuthorities())
-                .setIssuedAt(now)
-                .setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS512, secretKey)
+                .setSubject(authentication.getName())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + validityInMilliseconds))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
