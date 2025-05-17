@@ -27,16 +27,12 @@ public class UserService {
         //this.emf = Persistence.createEntityManagerFactory("myPersistenceUnit");
     }
 
-    public User registerUser(String login, String role, String password, int Id) {
+    public User registerUser(String login, String role, String password) {
 
-        userRepository.findById(Id);
         User user = new User();
         user.setLogin(login);
-        user.setRole(role);/*
-        String hashedPassword = passwordEncoder.encode(password);
-        user.setPassword(hashedPassword); // Хеширование пароля*/
-        user.setId(Id);
-
+        user.setRole(role);
+        user.setPassword(password);
         return userRepository.save(user); // Сохранение пользователя в базе данных
     }
 
@@ -82,4 +78,6 @@ public class UserService {
     public UserRepository GetUserRepository (){
         return userRepository;
     }
+
+
 }

@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<User> findAll();
-    List<User> findByLogin(String login);
+    User findByLogin(String login);
     List<User> findByRole (String role);
     Optional<User> getSecurityUserByLogin(String login);
     User findById(int id);
