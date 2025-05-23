@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -69,6 +71,20 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password or login");
     }
 
+    @GetMapping("/getMeals")
+    @PreAuthorize("isAuthenticated()")
+    public List<Integer> getUserMeals(Principal principal) {
+        UserDTO userDTO = getUserDTOForPrincipal(principal);
+        return userDTO.getMealsID();
+    }
+
+    // Вспомогательный метод для получения UserDTO на основе Principal
+    private UserDTO getUserDTOForPrincipal(Principal principal) {
+
+        User user = userService.GetUserRepository().findByLogin(principal.getName());
+        return new UserDTO(user);
+
+    }
     // Создание пользователя
     @PostMapping
     public User createUser(@RequestBody AuthDTO authDTO) {
