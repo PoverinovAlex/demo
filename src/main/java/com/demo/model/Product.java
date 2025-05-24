@@ -23,6 +23,8 @@ public class Product {
     private float carbohydrates;
     @Column
     private float calories;
+    @Column
+    private String imageUrl;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductInfo> productInfos = new ArrayList<>();
@@ -37,6 +39,26 @@ public class Product {
         this.carbohydrates = carbohydrates;
         this.calories = calories;
         this.productInfos = productInfos;
+    }
+
+    public Product(int id, String name, float proteins, float fats, float carbohydrates, float calories, String imageUrl, List<ProductInfo> productInfos) {
+        this.id = id;
+        this.name = name;
+        this.proteins = proteins;
+        this.fats = fats;
+        this.carbohydrates = carbohydrates;
+        this.calories = calories;
+        this.imageUrl = imageUrl;
+        this.productInfos = productInfos;
+    }
+
+    public Product(String name, float proteins, float fats, float carbohydrates, float calories, String imageUrl) {
+        this.name = name;
+        this.proteins = proteins;
+        this.fats = fats;
+        this.carbohydrates = carbohydrates;
+        this.calories = calories;
+        this.imageUrl = imageUrl;
     }
 
     // Геттеры и сеттеры
@@ -96,5 +118,13 @@ public class Product {
 
     public void setCalories(float calories) {
         this.calories = calories;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

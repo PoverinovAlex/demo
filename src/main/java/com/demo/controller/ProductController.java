@@ -9,6 +9,7 @@ import com.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -35,6 +36,16 @@ public class ProductController {
         return productDTO != null
                 ? new ResponseEntity<>(productDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/")
+    public String index(Model model) {
+        List<Product> products = new ArrayList<>();
+        // Добавьте ваши продукты в список
+        products.add(new Product("Банан", 5, 10, 20, 90, "https://steamuserimages-a.akamaihd.net/ugc/831329213371371783/06B84E6FC604FC50991016819976341F6BB1E6EB/?imw=512&amp;imh=384&amp;ima=fit&amp;impolicy=Letterbox&amp;imcolor=%23000000&amp;letterbox=true"));
+        // Добавьте остальные продукты аналогично
+        model.addAttribute("products", products);
+        return "index";
     }
 
     @GetMapping("/proteins/{startPro}/{endPro}")

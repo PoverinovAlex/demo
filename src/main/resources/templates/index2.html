@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск продуктов</title>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+<div class="header">
+    <h1>SHAPO</h1>
+</div>
+<div class="search-container">
+    <label for="search">Поиск продуктов:</label>
+    <input type="text" id="search" placeholder="Введите название продукта...">
+    <button type="submit">Искать</button>
+</div>
+<div class="main-container">
+    <div class="product-container" id="product-container">
+        <!-- Пример одного продукта -->
+        <div class="product">
+            <img src="https://steamuserimages-a.akamaihd.net/ugc/831329213371371783/06B84E6FC604FC50991016819976341F6BB1E6EB/?imw=512&amp;imh=384&amp;ima=fit&amp;impolicy=Letterbox&amp;imcolor=%23000000&amp;letterbox=true" alt="Продукт 1">
+            <p>Название: Банан</p>
+            <p>100 грамм</p>
+            <p>Каллории: 90</p>
+            <p>Белки: 10г</p>
+            <p>Углеводы: 20г</p>
+            <p>Жиры: 5г</p>
+            <div class="controls">
+                <button onclick="selectProduct('Банан', 90, 10, 20, 5)">+</button>
+                <button onclick="deselectProduct('Банан', 90, 10, 20, 5)">-</button>
+            </div>
+        </div>
+        <!-- Повторите блок .product для каждого из 10 продуктов -->
+        <div class="product">
+            <img src="https://goo.su/l7OUo" alt="Продукт 2">
+            <p>Название: Помидор</p>
+            <p>100 грамм</p>
+            <p>Каллории: 150</p>
+            <p>Белки: 15г</p>
+            <p>Углеводы: 25г</p>
+            <p>Жиры: 7г</p>
+            <div class="controls">
+                <button onclick="selectProduct('Помидор', 150, 15, 25, 7)">+</button>
+                <button onclick="deselectProduct('Помидор', 150, 15, 25, 7)">-</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://tornado.shop/images/detailed/4/P1001153-2.jpg" alt="Продукт 3">
+            <p>Название: Огурец</p>
+            <p>100 грамм</p>
+            <p>Каллории: 150</p>
+            <p>Белки: 15г</p>
+            <p>Углеводы: 25г</p>
+            <p>Жиры: 7г</p>
+            <div class="controls">
+                <button onclick="selectProduct('Огурец', 150, 15, 25, 7)">+</button>
+                <button onclick="deselectProduct('Огурец', 150, 15, 25, 7)">-</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://cache3.youla.io/files/images/780_780/5a/d5/5ad5f47ba380b6242869f103.jpg" alt="Продукт 4">
+            <p>Название: Картофель</p>
+            <p>100 грамм</p>
+            <p>Каллории: 150</p>
+            <p>Белки: 15г</p>
+            <p>Углеводы: 25г</p>
+            <p>Жиры: 7г</p>
+            <div class="controls">
+                <button onclick="selectProduct('Картофель', 150, 15, 25, 7)">+</button>
+                <button onclick="deselectProduct('Картофель', 150, 15, 25, 7)">-</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://main-cdn.sbermegamarket.ru/big2/hlr-system/-56/506/749/161/711/56/100028661726b0.jpg" alt="Продукт 5">
+            <p>Название: Морковь</p>
+            <p>100 грамм</p>
+            <p>Каллории: 150</p>
+            <p>Белки: 15г</p>
+            <p>Углеводы: 25г</p>
+            <p>Жиры: 7г</p>
+            <div class="controls">
+                <button onclick="selectProduct('Морковь', 150, 15, 25, 7)">+</button>
+                <button onclick="deselectProduct('Морковь', 150, 15, 25, 7)">-</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://moionline.ru/wp-content/uploads/2024/02/lukovitsa.jpg" alt="Продукт 6">
+            <p>Название: Лук</p>
+            <p>100 грамм</p>
+            <p>Каллории: 150</p>
+            <p>Белки: 15г</p>
+            <p>Углеводы: 25г</p>
+            <p>Жиры: 7г</p>
+            <div class="controls">
+                <button onclick="selectProduct('Лук', 150, 15, 25, 7)">+</button>
+                <button onclick="deselectProduct('Лук', 150, 15, 25, 7)">-</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://main-cdn.sbermegamarket.ru/big1/hlr-system/-17/400/677/646/191/10/100055355046b0.png" alt="Продукт 7">
+            <p>Название: Яблоко</p>
+            <p>100 грамм</p>
+            <p>Каллории: 150</p>
+            <p>Белки: 15г</p>
+            <p>Углеводы: 25г</p>
+            <p>Жиры: 7г</p>
+            <div class="controls">
+                <button onclick="selectProduct('Яблоко', 150, 15, 25, 7)">+</button>
+                <button onclick="deselectProduct('Яблоко', 150, 15, 25, 7)">-</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://avatars.mds.yandex.net/i?id=887f7eb02f5ed0f57807df8c11ae17b0_l-5251742-images-thumbs&n=13" alt="Продукт 8">
+            <p>Название: Апельсин</p>
+            <p>100 грамм</p>
+            <p>Каллории: 150</p>
+            <p>Белки: 15г</p>
+            <p>Углеводы: 25г</p>
+            <p>Жиры: 7г</p>
+            <div class="controls">
+                <button onclick="selectProduct('Апельсин', 150, 15, 25, 7)">+</button>
+                <button onclick="deselectProduct('Апельсин', 150, 15, 25, 7)">-</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://avatars.mds.yandex.net/i?id=b22c17f3b3847c8bffd4ceb56fbee51d_l-5849607-images-thumbs&n=13" alt="Продукт 9">
+            <p>Название: Груша</p>
+            <p>100 грамм</p>
+            <p>Каллории: 150</p>
+            <p>Белки: 15г</p>
+            <p>Углеводы: 25г</p>
+            <p>Жиры: 7г</p>
+            <div class="controls">
+                <button onclick="selectProduct('Груша', 150, 15, 25, 7)">+</button>
+                <button onclick="deselectProduct('Груша', 150, 15, 25, 7)">-</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://avatars.mds.yandex.net/get-mpic/11477103/2a0000018c15e98504478a944e8e34729daf/orig" alt="Продукт 10">
+            <p>Название: Виноград</p>
+            <p>100 грамм</p>
+            <p>Каллории: 150</p>
+            <p>Белки: 15г</p>
+            <p>Углеводы: 25г</p>
+            <p>Жиры: 7г</p>
+            <div class="controls">
+                <button onclick="selectProduct('Виноград', 150, 15, 25, 7)">+</button>
+                <button onclick="deselectProduct('Виноград', 150, 15, 25, 7)">-</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://proza.ru/pics/2020/11/08/2249.jpg" alt="Продукт 11">
+            <p>Название: Курица</p>
+            <p>100 грамм</p>
+            <p>Каллории: 150</p>
+            <p>Белки: 15г</p>
+            <p>Углеводы: 25г</p>
+            <p>Жиры: 7г</p>
+            <div class="controls">
+                <button onclick="selectProduct('Курица', 150, 15, 25, 7)">+</button>
+                <button onclick="deselectProduct('Курица', 150, 15, 25, 7)">-</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://main-cdn.sbermegamarket.ru/big1/hlr-system/933/635/828/111/021/41/100039285121b0.png" alt="Продукт 12">
+            <p>Название: Говядина</p>
+            <p>100 грамм</p>
+            <p>Каллории: 150</p>
+            <p>Белки: 15г</p>
+            <p>Углеводы: 25г</p>
+            <p>Жиры: 7г</p>
+            <div class="controls">
+                <button onclick="selectProduct('Говядина', 150, 15, 25, 7)">+</button>
+                <button onclick="deselectProduct('Говядина', 150, 15, 25, 7)">-</button>
+            </div>
+        </div>
+    </div>
+    <div class="selected-products">
+        <h2>Выбранные продукты</h2>
+        <div id="selected-products-list"></div>
+        <div id="total-nutrition">
+            <p>Общее количество:</p>
+            <p>Каллории: <span id="total-calories">0</span></p>
+            <p>Белки: <span id="total-protein">0</span>г</p>
+            <p>Углеводы: <span id="total-carbs">0</span>г</p>
+            <p>Жиры: <span id="total-fats">0</span>г</p>
+        </div>
+        <button id="save-meal">Save Meal</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

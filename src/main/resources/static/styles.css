@@ -1,0 +1,148 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #e6f0fa; /* Светло-синий фон */
+    margin: 0;
+    padding: 20px;
+    color: #2c3e50; /* Темно-синий текст */
+    text-align: center;
+}
+
+.header {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.header h1 {
+    color: #1a237e; /* Глубокий синий цвет */
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.search-container input {
+    padding: 12px;
+    width: 300px;
+    border: 1px solid #90caf9; /* Светло-синяя граница */
+    border-radius: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.search-container input:focus {
+    border-color: #2196f3; /* Ярко-синий цвет при фокусе */
+}
+
+.search-container button {
+    padding: 12px 20px;
+    background-color: #2196f3; /* Ярко-синий фон кнопки */
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+.search-container button:hover {
+    background-color: #1976d2; /* Более темный синий при наведении */
+}
+
+.main-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 20px;
+    flex: 3; /* Занимает 3 части от общего пространства */
+}
+
+.product {
+    background-color: white;
+    border: 1px solid #90caf9; /* Светло-синяя граница */
+    border-radius: 10px;
+    padding: 15px;
+    width: calc(25% - 20px);
+    box-sizing: border-box;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.product img {
+    width: 100%;
+    height: 50%;
+    border-radius: 8px;
+}
+
+.product p {
+    margin: 8px 0;
+    font-size: 0.9em;
+    color: #2c3e50; /* Темно-синий текст */
+}
+
+.controls {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.controls button {
+    background-color: #2196f3; /* Ярко-синий фон кнопки */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.controls button:hover {
+    background-color: #1976d2; /* Более темный синий при наведении */
+}
+
+.controls button:active {
+    background-color: #0d47a1; /* Самый темный синий при нажатии */
+}
+
+.selected-products {
+    flex: 1; /* Занимает 1 часть от общего пространства */
+    background-color: white;
+    border: 1px solid #90caf9; /* Светло-синяя граница */
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selected-products h2 {
+    margin-top: 0;
+    color: #1a237e; /* Глубокий синий цвет */
+}
+
+#selected-products-list {
+    margin: 10px 0;
+}
+
+#total-nutrition {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #1a237e; /* Глубокий синий цвет */
+}
