@@ -25,7 +25,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         this.myUserService = myUserService;
     }
 
-    @Override
+/*    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse
             response, FilterChain filterChain) throws ServletException, IOException {
         String token = getTokenFromRequest(request);
@@ -34,7 +34,43 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);
+    }*/
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        try {
+            String token = getTokenFromRequest(request);
+            if (token != null) {
+                try {
+                    if (jwtUtil.validateToken(token)) {
+                        Authentication authentication = jwtUtil.getAuthentication(token);
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    } else {
+                        // Если токен невалиден, отправляем ошибку 401 Unauthorized
+                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized: Invalid token");
+                        return;
+                    }
+                } catch (Exception ex) {
+                    // Логирование ошибки
+                    System.err.println("Cannot validate token: " + ex.getMessage());
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized: Invalid token");
+                    return;
+                }
+            } else {
+                // Если токен отсутствует, продолжаем цепочку фильтров
+                filterChain.doFilter(request, response);
+                return;
+            }
+        } catch (Exception ex) {
+            // Логирование ошибки
+            System.err.println("Cannot set user authentication: " + ex.getMessage());
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Server Error");
+            return;
+        }
+        filterChain.doFilter(request, response);
     }
+
+
     private String getTokenFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
