@@ -14,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Controller
@@ -22,6 +24,96 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+
+    private Map<String, Integer> selectedProducts = new ConcurrentHashMap<>();
+
+    @GetMapping("/")
+    public String index(Model model) {
+        List<Product> products = productService.GetProductRepository().findAll();
+        model.addAttribute("products", products);
+        model.addAttribute("selectedProducts", selectedProducts);
+
+        model.addAttribute("totalCalories", calculateTotalCalories());
+        model.addAttribute("totalProteins", calculateTotalProteins());
+        model.addAttribute("totalCarbohydrates", calculateTotalCarbohydrates());
+        model.addAttribute("totalFats", calculateTotalFats());
+
+        return "index";
+    }
+
+    @PostMapping("/selectProduct")
+    public String selectProduct(
+            @RequestParam String name,
+            @RequestParam double calories,
+            @RequestParam double protein,
+            @RequestParam double carbs,
+            @RequestParam double fats) {
+        selectedProducts.merge(name, 1, Integer::sum);
+        return "redirect:/";
+    }
+
+    @PostMapping("/deselectProduct")
+    public String deselectProduct(@RequestParam String name) {
+        selectedProducts.computeIfPresent(name, (k, v) -> v > 1 ? v - 1 : null);
+        return "redirect:/";
+    }
+
+    @PostMapping("/saveMeal")
+    public String saveMeal() {
+        // Логика сохранения приема пищи
+        selectedProducts.clear();
+        return "redirect:/";
+    }
+
+
+
+    private double calculateTotalCalories() {
+        return selectedProducts.entrySet().stream()
+                .mapToDouble(entry -> {
+                    Product product = productService.GetProductRepository().findByName(entry.getKey());
+                    return product != null ? product.getCalories() * entry.getValue() : 0;
+                })
+                .sum();
+    }
+
+    private double calculateTotalProteins() {
+        return selectedProducts.entrySet().stream()
+                .mapToDouble(entry -> {
+                    Product product = productService.GetProductRepository().findByName(entry.getKey());
+                    return product != null ? product.getProteins() * entry.getValue() : 0;
+                })
+                .sum();
+    }
+
+    private double calculateTotalCarbohydrates() {
+        return selectedProducts.entrySet().stream()
+                .mapToDouble(entry -> {
+                    Product product = productService.GetProductRepository().findByName(entry.getKey());
+                    return product != null ? product.getCarbohydrates() * entry.getValue() : 0;
+                })
+                .sum();
+    }
+
+    private double calculateTotalFats() {
+        return selectedProducts.entrySet().stream()
+                .mapToDouble(entry -> {
+                    Product product = productService.GetProductRepository().findByName(entry.getKey());
+                    return product != null ? product.getFats() * entry.getValue() : 0;
+                })
+                .sum();
+    }
+
+/*    private double calculateTotalNutrition(Function<Product, Double> nutritionExtractor) {
+        return selectedProducts.entrySet().stream()
+                .mapToDouble(entry -> {
+                    Product product = productService.GetProductRepository().findByName(entry.getKey());
+                    return product != null ? nutritionExtractor.apply(product) * entry.getValue() : 0;
+                })
+                .sum();
+    }*/
+
+    // ... остальные методы контроллера
 
     // Создание продукта
     @PostMapping
@@ -40,14 +132,6 @@ public class ProductController {
         } else {
             return "not-found"; // Представление not-found.html
         }
-    }
-
-    // Главная страница с продуктами
-    @GetMapping("/")
-    public String index(Model model) {
-        List<Product> products = productService.GetProductRepository().findAll();
-        model.addAttribute("products", products);
-        return "index"; // Представление index.html
     }
 
     // Получение продуктов по диапазону белков
