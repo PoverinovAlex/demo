@@ -9,121 +9,106 @@ import com.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
-@RestController
-@RequestMapping("/api/products")
+@Controller
+@RequestMapping("/products")
 public class ProductController {
+
     @Autowired
     private ProductService productService;
 
     // Создание продукта
     @PostMapping
-    public Product createProduct(@RequestBody Product product) {
-        return productService.saveProduct(product);
+    public String createProduct(@ModelAttribute Product product) {
+        productService.saveProduct(product);
+        return "redirect:/products/";
     }
+
     // Получение продукта по ID
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDTO> getProductById(@PathVariable(name = "id") int id){
+    public String getProductById(@PathVariable(name = "id") int id, Model model) {
         Product product = productService.GetProductRepository().findById(id);
-        ProductDTO productDTO = new ProductDTO(product);
-
-        return productDTO != null
-                ? new ResponseEntity<>(productDTO, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (product != null) {
+            model.addAttribute("product", new ProductDTO(product));
+            return "product-detail"; // Представление product-detail.html
+        } else {
+            return "not-found"; // Представление not-found.html
+        }
     }
 
+    // Главная страница с продуктами
     @GetMapping("/")
     public String index(Model model) {
-        List<Product> products = new ArrayList<>();
-        // Добавьте ваши продукты в список
-        products.add(new Product("Банан", 5, 10, 20, 90, "https://steamuserimages-a.akamaihd.net/ugc/831329213371371783/06B84E6FC604FC50991016819976341F6BB1E6EB/?imw=512&amp;imh=384&amp;ima=fit&amp;impolicy=Letterbox&amp;imcolor=%23000000&amp;letterbox=true"));
-        // Добавьте остальные продукты аналогично
+        List<Product> products = productService.GetProductRepository().findAll();
         model.addAttribute("products", products);
-        return "index";
+        return "index"; // Представление index.html
     }
 
+    // Получение продуктов по диапазону белков
     @GetMapping("/proteins/{startPro}/{endPro}")
-    public ResponseEntity<List<ProductDTO>> getProductsByProteins(@PathVariable float startPro, @PathVariable float endPro) {
+    public String getProductsByProteins(@PathVariable float startPro, @PathVariable float endPro, Model model) {
         List<Product> products = productService.GetProductRepository().findByProteinsBetween(startPro, endPro);
-        List<ProductDTO> productDTOList = new ArrayList<>();
-        for (Product product : products){
-            ProductDTO productDTO = new ProductDTO(product);
-            productDTOList.add(productDTO);
-        }
-        if (!productDTOList.isEmpty()) {
-            return ResponseEntity.ok().body(productDTOList);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        List<ProductDTO> productDTOList = products.stream()
+                .map(ProductDTO::new)
+                .collect(Collectors.toList());
+        model.addAttribute("products", productDTOList);
+        return "products-list"; // Представление products-list.html
     }
 
+    // Получение продуктов по диапазону жиров
     @GetMapping("/fats/{startFat}/{endFat}")
-    public ResponseEntity<List<ProductDTO>> getProductsByFats(@PathVariable float startFat, @PathVariable float endFat) {
+    public String getProductsByFats(@PathVariable float startFat, @PathVariable float endFat, Model model) {
         List<Product> products = productService.GetProductRepository().findByFatsBetween(startFat, endFat);
-        List<ProductDTO> productDTOList = new ArrayList<>();
-        for (Product product : products){
-            ProductDTO productDTO = new ProductDTO(product);
-            productDTOList.add(productDTO);
-        }
-        if (!productDTOList.isEmpty()) {
-            return ResponseEntity.ok().body(productDTOList);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        List<ProductDTO> productDTOList = products.stream()
+                .map(ProductDTO::new)
+                .collect(Collectors.toList());
+        model.addAttribute("products", productDTOList);
+        return "products-list"; // Представление products-list.html
     }
 
+    // Получение продуктов по диапазону углеводов
     @GetMapping("/carbohydrates/{startCar}/{endCar}")
-    public ResponseEntity<List<ProductDTO>> getProductsByCarbohydrates(@PathVariable float startCar, @PathVariable float endCar) {
+    public String getProductsByCarbohydrates(@PathVariable float startCar, @PathVariable float endCar, Model model) {
         List<Product> products = productService.GetProductRepository().findByCarbohydratesBetween(startCar, endCar);
-        List<ProductDTO> productDTOList = new ArrayList<>();
-        for (Product product : products){
-            ProductDTO productDTO = new ProductDTO(product);
-            productDTOList.add(productDTO);
-        }
-        if (!productDTOList.isEmpty()) {
-            return ResponseEntity.ok().body(productDTOList);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        List<ProductDTO> productDTOList = products.stream()
+                .map(ProductDTO::new)
+                .collect(Collectors.toList());
+        model.addAttribute("products", productDTOList);
+        return "products-list"; // Представление products-list.html
     }
 
+    // Получение продуктов по диапазону калорий
     @GetMapping("/calories/{startCal}/{endCal}")
-    public ResponseEntity<List<ProductDTO>> getProductsByCalories(@PathVariable float startCal, @PathVariable float endCal) {
+    public String getProductsByCalories(@PathVariable float startCal, @PathVariable float endCal, Model model) {
         List<Product> products = productService.GetProductRepository().findByCaloriesBetween(startCal, endCal);
-        List<ProductDTO> productDTOList = new ArrayList<>();
-        for (Product product : products){
-            ProductDTO productDTO = new ProductDTO(product);
-            productDTOList.add(productDTO);
-        }
-        if (!productDTOList.isEmpty()) {
-            return ResponseEntity.ok().body(productDTOList);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        List<ProductDTO> productDTOList = products.stream()
+                .map(ProductDTO::new)
+                .collect(Collectors.toList());
+        model.addAttribute("products", productDTOList);
+        return "products-list"; // Представление products-list.html
     }
+
     // Получение всех продуктов
     @GetMapping
-    public List<ProductDTO> getAllProduct() {
+    public String getAllProduct(Model model) {
         List<Product> products = productService.GetProductRepository().findAll();
-        List<ProductDTO> productDTOList = new ArrayList<>();
-        for (Product product : products){
-            ProductDTO productDTO = new ProductDTO(product);
-            productDTOList.add(productDTO);
-        }
-        return productDTOList;
+        List<ProductDTO> productDTOList = products.stream()
+                .map(ProductDTO::new)
+                .collect(Collectors.toList());
+        model.addAttribute("products", productDTOList);
+        return "products-list"; // Представление products-list.html
     }
 
     // Обновление продукта
-    @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Integer id, @RequestBody Product productDetails) {
+    @PostMapping("/{id}")
+    public String updateProduct(@PathVariable Integer id, @ModelAttribute Product productDetails) {
         Optional<Product> productOptional = productService.GetProductRepository().findById(id);
-
         Product defaultProduct = new Product(); // Создайте объект по умолчанию
         Product product = productOptional.orElse(defaultProduct);
 
@@ -134,25 +119,21 @@ public class ProductController {
             product.setCarbohydrates(productDetails.getCarbohydrates());
             product.setCalories(productDetails.getCalories());
 
-            Product updatedProduct = productService.GetProductRepository().save(product);
-            return ResponseEntity.ok().body(updatedProduct);
-        } else {
-            return ResponseEntity.notFound().build();
+            productService.GetProductRepository().save(product);
         }
+        return "redirect:/products/";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Integer id) {
-
+    // Удаление продукта
+    @PostMapping("/{id}/delete")
+    public String deleteProduct(@PathVariable Integer id) {
         Optional<Product> productOptional = productService.GetProductRepository().findById(id);
         Product defaultProduct = new Product(); // Создайте объект по умолчанию
         Product product = productOptional.orElse(defaultProduct);
 
         if (product != null) {
             productService.GetProductRepository().delete(product);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
         }
+        return "redirect:/products/";
     }
 }
