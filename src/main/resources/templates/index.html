@@ -1,106 +1,12 @@
-СантьяГо Очкошник, [27.05.2025 23:20]
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Поиск продуктов</title>
-    <link rel="stylesheet" th:href="@{/styles.css}">
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
-
-<!-- Ссылка на главную страницу с продуктами (теперь /products/) -->
-<a th:href="@{/products/}">View Products</a>
-
-<div class="header">
-    <h1>SHAPO</h1>
-</div>
-
-<!-- Форма поиска (если нужно) -->
-<div class="search-container">
-    <form th:action="@{/products/search}" method="get">
-        <label for="search">Поиск продуктов:</label>
-        <input type="text" id="search" name="query" placeholder="Введите название...">
-        <button type="submit">Искать</button>
-    </form>
-</div>
-
-<!-- Основной контейнер с продуктами -->
-<div class="main-container">
-    <div class="product-container" id="product-container">
-        <!-- Отображение списка продуктов -->
-        <div th:each="product : ${products}" class="product">
-            <img th:src="@{${product.imageUrl}}" alt="Product Image">
-            <p>Название: <span th:text="${product.name}"></span></p>
-            <p>100 грамм</p>
-            <p>Калории: <span th:text="${product.calories}"></span></p>
-            <p>Белки: <span th:text="${product.proteins}"></span>г</p>
-            <p>Углеводы: <span th:text="${product.carbohydrates}"></span>г</p>
-            <p>Жиры: <span th:text="${product.fats}"></span>г</p>
-
-            <!-- Кнопки "+" и "-" (теперь отправляют запросы в /products/selectProduct и /products/deselectProduct) -->
-            <div class="controls">
-                <form th:action="@{/products/selectProduct}" method="post">
-                    <input type="hidden" name="name" th:value="${product.name}">
-                    <input type="hidden" name="calories" th:value="${product.calories}">
-                    <input type="hidden" name="protein" th:value="${product.proteins}">
-                    <input type="hidden" name="carbs" th:value="${product.carbohydrates}">
-                    <input type="hidden" name="fats" th:value="${product.fats}">
-                    <button type="submit">+</button>
-                </form>
-                <form th:action="@{/products/deselectProduct}" method="post">
-                    <input type="hidden" name="name" th:value="${product.name}">
-                    <button type="submit">-</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Блок выбранных продуктов -->
-    <div class="selected-products">
-        <h2>Выбранные продукты</h2>
-        <div id="selected-products-list">
-            <div th:each="entry : ${selectedProducts}">
-                <p th:text="${entry.key} + ' - ' + ${entry.value} + ' шт.'"></p>
-            </div>
-        </div>
-
-        <!-- Общая пищевая ценность -->
-        <div id="total-nutrition">
-            <p>Общее количество:</p>
-            <p>Калории: <span th:text="${#numbers.formatDecimal(totalCalories, 1, 2)}"></span></p>
-            <p>Белки: <span th:text="${#numbers.formatDecimal(totalProteins, 1, 2)}"></span>г</p>
-            <p>Углеводы: <span th:text="${#numbers.formatDecimal(totalCarbohydrates, 1, 2)}"></span>г</p>
-            <p>Жиры: <span th:text="${#numbers.formatDecimal(totalFats, 1, 2)}"></span>г</p>
-        </div>
-
-        <!-- Кнопка сохранения (теперь /products/saveMeal) -->
-        <form th:action="@{/products/saveMeal}" method="post">
-            <button type="submit">Save Meal</button>
-        </form>
-    </div>
-</div>
-</body>
-</html>
-
-
-<!--
-
-
-<!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Поиск продуктов</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-&lt;!&ndash; Ссылка на главную страницу с продуктами &ndash;&gt;
-<a th:href="@{/products/}">View Products</a>
-
-СантьяГо Очкошник, [27.05.2025 23:20]
 <div class="header">
     <h1>SHAPO</h1>
 </div>
@@ -155,4 +61,4 @@
     </div>
 </div>
 </body>
-</html>-->
+</html>

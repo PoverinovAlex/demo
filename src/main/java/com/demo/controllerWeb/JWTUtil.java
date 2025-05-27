@@ -40,7 +40,7 @@ public class JWTUtil {
                 .getBody();
     }
 
-    public boolean validateToken(String token) { // проверка на валидацию токена
+/*    public boolean validateToken(String token) { // проверка на валидацию токена
         try {
             Jwts.parser()
                     .setSigningKey(secretKey)
@@ -58,6 +58,34 @@ public class JWTUtil {
         } catch (IllegalArgumentException ex) {
             // Пустой claims
             System.out.println("JWT claims string is empty");
+        }
+        return false;
+    }*/
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser()
+                    .setSigningKey(secretKey)
+                    .parseClaimsJws(token);
+            return true;
+        } catch (MalformedJwtException ex) {
+            // Невалидный токен
+            System.err.println("Invalid JWT token: " + ex.getMessage());
+        } catch (ExpiredJwtException ex) {
+            // Истек срок действия
+            System.err.println("Expired JWT token: " + ex.getMessage());
+        } catch (UnsupportedJwtException ex) {
+            // Неподдерживаемый токен
+            System.err.println("Unsupported JWT token: " + ex.getMessage());
+        } catch (IllegalArgumentException ex) {
+            // Пустой claims
+            System.err.println("JWT claims string is empty: " + ex.getMessage());
+        } catch (SignatureException ex) {
+            // Ошибка подписи
+            System.err.println("JWT signature does not match locally computed signature: " + ex.getMessage());
+        } catch (Exception ex) {
+            // Общая обработка исключений
+            System.err.println("Error validating JWT token: " + ex.getMessage());
         }
         return false;
     }
