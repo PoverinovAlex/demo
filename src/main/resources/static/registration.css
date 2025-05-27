@@ -1,0 +1,121 @@
+/* Общие стили для body */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #e0f7fa; /* Светлый голубой фон */
+    color: #004d40; /* Темно-зеленый текст для контраста */
+    margin: 0;
+    padding: 0;
+}
+
+/* Контейнер для формы */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Высота на весь экран */
+}
+
+/* Стили формы */
+.form {
+    background-color: #ffffff; /* Белый фон для формы */
+    border-radius: 8px; /* Скругленные углы */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Тень для формы */
+    padding: 20px;
+    width: 300px; /* Ширина формы */
+}
+
+/* Заголовок формы */
+.form-header {
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+.form-header h1 {
+    color: #00796b; /* Темно-синий заголовок */
+}
+
+/* Группы полей формы */
+.form-group {
+    margin-bottom: 15px; /* Отступ между группами */
+}
+
+/* Метки полей */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Поля ввода */
+input[type="text"],
+input[type="password"] {
+    width: 100%; /* Ширина поля на всю ширину контейнера */
+    padding: 10px; /* Отступ внутри поля */
+    border: 1px solid #00796b; /* Цвет рамки */
+    border-radius: 4px; /* Скругленные углы */
+    box-sizing: border-box; /* Учет отступов и границ в ширине */
+}
+
+/* Кнопка отправки */
+button {
+    width: 100%; /* Ширина кнопки на всю ширину контейнера */
+    padding: 10px;
+    background-color: #009688; /* Цвет кнопки */
+    color: white; /* Цвет текста на кнопке */
+    border: none; /* Убираем рамку */
+    border-radius: 4px; /* Скругленные углы */
+    cursor: pointer; /* Курсор при наведении */
+    font-size: 16px; /* Размер шрифта */
+}
+
+/* Эффект наведения на кнопку */
+button:hover {
+    background-color: #00796b; /* Темнее при наведении */
+}
+
+/* Ссылка на регистрацию */
+.form-footer {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.form-footer a {
+    color: #00796b; /* Цвет ссылки */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+.form-footer a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+/* Стили для сообщения об успешной регистрации */
+#success-message {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed; /* Фиксированное позиционирование */
+    top: 15%; /* Расположение сверху, перенесено выше */
+    left: 50%; /* Центрируем по горизонтали */
+    transform: translate(-50%, -50%); /* Центрируем элемент */
+    background-color: #28a745; /* Ярко-зеленый фон */
+    color: white; /* Белый текст */
+    padding: 20px; /* Отступы вокруг текста */
+    border: 2px solid #155724; /* Темно-зеленая рамка */
+    border-radius: 10px; /* Скругленные углы */
+    z-index: 1000; /* Убедимся, что сообщение поверх всего остального */
+    font-size: 18px; /* Размер шрифта */
+    text-align: center; /* Выравнивание текста по центру */
+    animation: fadeInOut 3s forwards; /* Анимация появления и исчезновения */
+}
+
+@keyframes fadeInOut {
+     0% { opacity: 0; }
+     10% { opacity: 1; }
+     90% { opacity: 1; }
+     100% { opacity: 0; }
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 400px) {
+    .form {
+        width: 90%; /* Ширина формы на мобильных устройствах */
+    }
+}

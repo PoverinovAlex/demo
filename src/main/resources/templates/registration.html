@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="../static/registration.css"> <!-- Подключаем CSS файл -->
+</head>
+<body>
+<div class="container">
+    <form class="form" th:action="@{/register}" th:object="${user}" method="post" onsubmit="return showSuccessMessage(event)">
+        <div class="form-header">
+            <h1>Регистрация</h1>
+        </div>
+        <div class="form-group">
+            <label for="login">Логин:</label>
+            <input type="text" id="login" th:field="*{login}" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" th:field="*{password}" required>
+        </div>
+        <div class="form-group">
+            <button type="submit">Зарегистрироваться</button>
+        </div>
+        <div class="form-footer">
+            <p><a href="../templates/login.html">Уже регистрировался?</a></p>
+        </div>
+    </form>
+    <div id="success-message">
+        <p>Регистрация прошла успешно!</p>
+    </div>
+</div>
+<script>
+    function showSuccessMessage(event) {
+        event.preventDefault(); // Предотвращаем отправку формы для демонстрации
+        const successMessage = document.getElementById('success-message');
+        successMessage.style.display = 'block'; // Показываем сообщение
+
+        setTimeout(() => {
+            successMessage.style.display = 'none'; // Скрываем сообщение через 3 секунды
+        }, 1500); // Задержка в 3 секунды
+
+        // Можно добавить логику отправки формы здесь, если нужно
+        // event.target.submit(); // Отправляем форму
+    }
+</script>
+</body>
+</html>

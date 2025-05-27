@@ -1,0 +1,49 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-image: url('https://avatars.mds.yandex.net/i?id=0b08745e7afcc1277674303354696f37f8c73ebd-12609382-images-thumbs&n=13');
+    background-size: cover;
+    background-position: center 70%; /* Изменяем позицию по вертикали */
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-container {
+    text-align: center;
+    color: white; /* Белый текст для контраста с фоном */
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон для текста */
+    padding: 40px;
+    border-radius: 10px;
+}
+
+.error-container h1 {
+    font-size: 72px;
+    margin: 0;
+}
+
+.error-container p {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.error-container a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff; /* Синий цвет для кнопки */
+    color: white; /* Белый текст */
+    text-decoration: none; /* Убираем подчеркивание */
+    border-radius: 5px; /* Скругленные углы */
+    font-size: 18px;
+}
+
+.error-container a:hover {
+    background-color: #0056b3; /* Темнее при наведении */
+}

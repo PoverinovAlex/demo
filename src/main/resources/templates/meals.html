@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сохранённые продукты</title>
+    <link rel="stylesheet" href="../static/meals.css">
+</head>
+<body>
+<div class="header">
+    <h1>Сохранённые приемы пищи</h1>
+</div>
+<div class="saved-products">
+    <div class="collapsible" th:each="meal : ${meals}" th:onclick="|toggleContent(this)|">
+        <h2 th:text="${meal.name}"></h2>
+        <span class="arrow">▼</span>
+    </div>
+    <div class="content" id="meal-content">
+        <div id="saved-products-list">
+            <div th:each="product : ${meal.products}">
+                <p th:text="${product.name} + ' - ' + ${product.quantity}"></p>
+            </div>
+        </div>
+        <div id="total-nutrition">
+            <p>Общее количество:</p>
+            <p>Каллории: <span th:text="${meal.totalCalories}"></span></p>
+            <p>Белки: <span th:text="${meal.totalProtein}"></span>г</p>
+            <p>Углеводы: <span th:text="${meal.totalCarbs}"></span>г</p>
+            <p>Жиры: <span th:text="${meal.totalFats}"></span>г</p>
+        </div>
+    </div>
+</div>
+<script>
+    function toggleContent(element) {
+        const content = element.nextElementSibling;
+        const arrow = element.querySelector('.arrow');
+        if (content.style.display === 'block') {
+            content.style.display = 'none';
+            arrow.classList.remove('down');
+        } else {
+            content.style.display = 'block';
+            arrow.classList.add('down');
+        }
+    }
+</script>
+</body>
+</html>
